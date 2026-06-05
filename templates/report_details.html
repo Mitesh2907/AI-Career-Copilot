@@ -130,10 +130,11 @@
 
     {% if report.file_path and report.file_name.endswith(".pdf") %}
 
-    <iframe src="/{{ report.file_path }}" width="100%" height="1000" style="
+    <iframe src="{{ url_for('uploaded_file', filename=report.file_name) }}" width="100%" height="1000" style="
         border:1px solid #e5e7eb;
         border-radius:12px;
         background:white;
+        margin-top:15px;
     ">
     </iframe>
 
