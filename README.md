@@ -58,9 +58,6 @@ DATABASE_URL=your_database_url
 GEMINI_API_KEY=your_gemini_api_key
 ```
 
-## Screenshots
-
-Add screenshots here after deployment.
 
 ## Author
 
