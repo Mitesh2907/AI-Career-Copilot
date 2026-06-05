@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Copilot</title>
+
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+
+</head>
+
+<body>
+
+<header>
+    <div class="container navbar">
+
+        <div class="logo">
+            🚀 AI Career Copilot
+        </div>
+
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/history">History</a>
+        </nav>
+
+        <div class="user-menu">
+            👤 {{ session.user }}
+            <a href="/logout">Logout</a>
+        </div>
+
+    </div>
+</header>
+
+<main class="container">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer>
+    <p>
+        © 2026 AI Career Copilot |
+        Built with Flask, SQLAlchemy & AI
+    </p>
+</footer>
+
+</body>
+</html>

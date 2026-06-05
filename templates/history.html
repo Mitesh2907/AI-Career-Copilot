@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="dashboard-header">
+    <h2>📜 Analysis History</h2>
+    <p>View all your previous resume analyses.</p>
+</div>
+<form method="GET" class="search-form">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search resume by file name..."
+        value="{{ search }}"
+    >
+
+    <button type="submit">
+        🔍 Search
+    </button>
+
+</form>
+
+{% if reports %}
+
+<div class="history-grid">
+
+{% for r in reports %}
+
+<div class="history-card">
+
+    <div class="history-section">
+
+        <h3>📄 {{ r.file_name }}</h3>
+
+        <p class="history-score">
+            Score: {{ r.score }}/100
+        </p>
+
+    </div>
+
+    <div class="history-actions">
+
+        <a
+            href="/report/{{ r.id }}"
+            class="view-btn"
+        >
+            👁 View Analysis
+        </a>
+
+        <a
+            href="/delete-report/{{ r.id }}"
+            class="delete-btn"
+            onclick="return confirm('Are you sure you want to delete this report?')"
+        >
+            🗑 Delete
+        </a>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+
+</div>
+
+{% else %}
+
+<div class="empty-history">
+
+```
+<h3>No Reports Found</h3>
+
+<p>
+    You haven't analyzed any resume yet.
+</p>
+```
+
+</div>
+
+{% endif %}
+
+{% endblock %}
