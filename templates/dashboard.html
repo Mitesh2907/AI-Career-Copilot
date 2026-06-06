@@ -1,160 +1,81 @@
 {% extends "base.html" %}
 {% block content %}
-
 <div class="dashboard-header">
-    <h2>Welcome, {{ user }}</h2>
-    <p>Analyze your resume and discover your career roadmap.</p>
+    <h2>Welcome back, {{ user }} ✨</h2>
+    <p>Upload your resume and let AI analyze your strengths, gaps, and career path</p>
 </div>
-
 <div class="card">
-
-
-    <h3>🚀 AI Resume Analyzer</h3>
-
+    <h3>🚀 Resume Analyzer</h3>
     <form method="POST" enctype="multipart/form-data">
-
-        <label>Paste Resume</label>
-        <textarea name="resume" placeholder="Paste your resume here..."></textarea>
-
-        <label>Upload Resume (PDF / DOCX)</label>
-        <input type="file" name="file">
-
-        <label>Target Role</label>
-        <input name="role" placeholder="Backend Engineer, Frontend Developer, Data Analyst..." required>
-
-        <button type="submit">
-            Analyze Resume
-        </button>
-
+        <label>📝 Paste Resume Text</label>
+        <textarea name="resume" placeholder="Paste your resume content here..."></textarea>
+        
+        <label>📎 Upload Resume File</label>
+        <div class="file-upload-area">
+            <label for="fileInput" class="file-upload-label">
+                <div class="file-upload-icon">📄</div>
+                <div class="file-upload-text">Drag & Drop Resume Here</div>
+                <div class="file-upload-subtext">PDF / DOCX up to 10MB</div>
+                <div class="file-upload-browse">Click to Browse</div>
+            </label>
+            <input type="file" name="file" id="fileInput" accept=".pdf,.docx" onchange="updateFileName(this)">
+            <div id="fileName" class="file-name"></div>
+        </div>
+        
+        <label>🎯 Target Job Role</label>
+        <input name="role" placeholder="e.g., Backend Engineer, Frontend Developer, Data Analyst..." required>
+        
+        <button type="submit" class="analyze-btn">✨ Analyze Resume →</button>
     </form>
-
-
 </div>
-
 {% if result %}
-
 <div class="results-container" id="results">
-
-
-    <!-- Resume Score -->
     <div class="result-card score-card">
         <h3>📊 Resume Score</h3>
-
-        <div class="score-box">
-            {{ result.get("resume_score", 0) }}/100
-        </div>
+        <div class="score-box">{{ result.get("resume_score", 0) }}/100</div>
     </div>
-
-    <!-- ATS Score -->
     <div class="result-card score-card">
         <h3>🤖 ATS Score</h3>
-
-        <div class="score-box ats-box">
-            {{ result.get("ats_score", 0) }}/100
-        </div>
+        <div class="score-box ats-box">{{ result.get("ats_score", 0) }}/100</div>
     </div>
-
-    <!-- Error -->
     {% if result.error %}
     <div class="result-card">
         <h3>❌ Error</h3>
         <p>{{ result.error }}</p>
     </div>
     {% endif %}
-
-    <!-- Strengths -->
     <div class="result-card strength-card">
-
         <h3>💪 Strengths</h3>
-
-        <ul>
-            {% for s in result.get("strengths", []) %}
-            <li>{{ s }}</li>
-            {% endfor %}
-        </ul>
-
+        <ul>{% for s in result.get("strengths", []) %}<li>{{ s }}</li>{% endfor %}</ul>
     </div>
-
-    <!-- Weaknesses -->
     <div class="result-card weakness-card">
-
         <h3>⚠️ Areas To Improve</h3>
-
-        <ul>
-            {% for s in result.get("weaknesses", []) %}
-            <li>{{ s }}</li>
-            {% endfor %}
-        </ul>
-
+        <ul>{% for s in result.get("weaknesses", []) %}<li>{{ s }}</li>{% endfor %}</ul>
     </div>
-
-    <!-- Skills -->
     <div class="result-card">
-
-        <h3>💻 Skills</h3>
-
-        <div>
-            {% for s in result.get("skills", []) %}
-            <span class="skill-tag">{{ s }}</span>
-            {% endfor %}
-        </div>
-
+        <h3>💻 Detected Skills</h3>
+        <div>{% for s in result.get("skills", []) %}<span class="skill-tag">{{ s }}</span>{% endfor %}</div>
     </div>
-
-    <!-- Missing Skills -->
     <div class="result-card">
-
         <h3>📈 Missing Skills</h3>
-
-        <div>
-            {% for s in result.get("missing_skills", []) %}
-            <span class="skill-tag">{{ s }}</span>
-            {% endfor %}
-        </div>
-
+        <div>{% for s in result.get("missing_skills", []) %}<span class="skill-tag">{{ s }}</span>{% endfor %}</div>
     </div>
-
-    <!-- Roadmap -->
     <div class="result-card">
-
         <h3>🛣️ Learning Roadmap</h3>
-
-        <ul>
-            {% for s in result.get("roadmap", []) %}
-            <li>{{ s }}</li>
-            {% endfor %}
-        </ul>
-
+        <ul>{% for s in result.get("roadmap", []) %}<li>{{ s }}</li>{% endfor %}</ul>
     </div>
-
-    <!-- Interview Questions -->
     <div class="result-card">
-
         <h3>🎯 Interview Questions</h3>
-
-        <ul>
-            {% for s in result.get("interview_questions", []) %}
-            <li>{{ s }}</li>
-            {% endfor %}
-        </ul>
-
+        <ul>{% for s in result.get("interview_questions", []) %}<li>{{ s }}</li>{% endfor %}</ul>
     </div>
-
-
 </div>
-
-{% endif %}
-
-{% if result %}
-
 <script>
-    window.onload = function () {
-        document.getElementById("results").scrollIntoView({
-            behavior: "smooth"
-        });
+    window.onload = function() {
+        const results = document.getElementById("results");
+        if (results) {
+            results.scrollIntoView({ behavior: "smooth" });
+        }
     };
 </script>
-
 {% endif %}
-
 {% endblock %}

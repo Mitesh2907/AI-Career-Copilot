@@ -1,58 +1,49 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AI Career Copilot</title>
-
+    <meta name="description" content="AI-powered resume analysis and career roadmap generator">
+    <title>AI Career Copilot - Smart Resume Analysis</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
-
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
 </head>
-
 <body>
-
     <header>
         <div class="container navbar">
-
             <div class="logo">
-                🚀 AI Career Copilot
+                <span>🚀</span> AI Career Copilot
             </div>
-
             <nav>
                 <a href="/dashboard">Dashboard</a>
                 <a href="/history">History</a>
             </nav>
-
             <div class="user-menu">
-                👤 {{ session.user }}
+                <span>👤 {{ session.user }}</span>
                 <a href="/logout">Logout</a>
             </div>
-
         </div>
     </header>
-
     <main class="container">
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     </main>
-
     <footer>
-        <p>
-            © 2026 AI Career Copilot |
-            Built with Flask, SQLAlchemy & AI
-        </p>
+        <p>© 2026 AI Career Copilot — Empowering your career journey with artificial intelligence</p>
+        <p style="margin-top: 0.5rem; font-size: 0.75rem; opacity: 0.7;">Built with Flask, SQLAlchemy & AI</p>
     </footer>
 
+    <!-- File upload JavaScript -->
+    <script>
+        function updateFileName(input) {
+            const fileName = input.files[0]?.name || 'No file chosen';
+            const fileNameDisplay = document.getElementById('fileName');
+            if (fileNameDisplay) {
+                fileNameDisplay.textContent = fileName;
+            }
+        }
+    </script>
 </body>
-
 </html>
